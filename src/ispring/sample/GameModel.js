@@ -130,14 +130,43 @@ goog.scope(function() {
         {
             this._speed += conf._ADD_SPEED;
         },
+        
+        
+        /** (private)
+         * @param newColor
+         * @returns {boolean}
+         * @private
+         */
+        CheckColors: function(newColor)
+        {
+           for (var i = 0; i < this._colors.length; ++i)
+            {
+                if (this._colors[i] == newColor)
+                {
+                    return true;
+                }
+            }
+            return false;
+        },
+
         IncrementSectors: function()
         {
             ++this._numberOfColors;
+
 
             var r = this.GetRandomArbitary(0, 256);
             var g = this.GetRandomArbitary(0, 256);
             var b = this.GetRandomArbitary(0, 256);
             var newRandomColor='#' + r.toString(16) + g.toString(16) + b.toString(16);
+            console.log(newRandomColor);
+            while (this.CheckColors(newRandomColor))
+            {
+                var r = this.GetRandomArbitary(0, 256);
+                var g = this.GetRandomArbitary(0, 256);
+                var b = this.GetRandomArbitary(0, 256);
+                newRandomColor='#' + r.toString(16) + g.toString(16) + b.toString(16);
+                console.log(newRandomColor);
+            }
             this._colors.push(newRandomColor);
 
             this._shapes = [];
@@ -152,6 +181,7 @@ goog.scope(function() {
                 this._shapes[num - 1].SetColor(this._colors[i]);
                 this._shapes[num - 1].SetPosition(conf._CENTER_X, conf._CENTER_Y);
                 this._shapes[num - 1].SetRotation(conf._TWO_HALVES / this._numberOfColors * Math.PI * i);
+                console.log(i, this._colors[i], conf._TWO_HALVES / this._numberOfColors * Math.PI * i)
                 this._shapes[num - 1].SetStartRotation(conf._TWO_HALVES / this._numberOfColors * Math.PI * i);
             }
         },

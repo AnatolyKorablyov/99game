@@ -168,10 +168,11 @@ goog.scope(function()
             var turn = this.m_rotation / (TWO_HALVES * Math.PI);
             turn = turn % 1;
             turn = turn * 2 * Math.PI;
+            console.log("as ", turn);
             if (turn < 0)
             {
                 turn = Math.abs(turn);
-                console.log(turn);
+                console.log("Minus ", turn);
                 for (var i = 1; i < this.m_shapes.length; ++i)
                 {
                     if (checkRange(turn, turn))

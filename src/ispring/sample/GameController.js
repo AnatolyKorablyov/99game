@@ -36,28 +36,34 @@ goog.scope(function() {
             var shapes = this._model.GetShapes();
             var arrow = this._model.GetArrow();
             var rotate = this._model.GetRotate();
-
+            const thisPtr = this;
             function CompareShapes(shapeArray, arrowShape, rangeNumber)
             {
-                var sectorRadian = config._TWO_HALVES / config._NUMBER_OF_COLORS * Math.PI;
+                var sectorRadian = config._TWO_HALVES / thisPtr._model.GetNumberOfColors() * Math.PI;
 
                 for (var i = 0; i < shapeArray.length; ++i)
                 {
-                    var startRot = shapeArray[i].GetStartRotation();
-                    if (startRot < rangeNumber && rangeNumber < sectorRadian * (i + 1) &&
-                        shapeArray[i].GetColor() == arrowShape.GetColor())
+                    if (shapeArray[i].GetColor() == arrowShape.GetColor())
                     {
-                        return true;
+                        var startRot = shapeArray[i].GetStartRotation();
+                        console.log(shapeArray[i].GetColor(), arrowShape.GetColor(), " startRot ", startRot, " rangeNum ", rangeNumber, " sectorRadian ", sectorRadian * (i + 1));
+                        if ((startRot < rangeNumber) && (rangeNumber <= sectorRadian * (i + 1)))
+                        {
+                            return true;
+                        }
                     }
+                   
                 }
                 return false;
             }
             var turn = rotate / (config._TWO_HALVES * Math.PI);
             turn = turn % 1;
             turn = turn * 2 * Math.PI;
+            console.log(turn);
             if (turn < 0)
             {
                 turn = Math.abs(turn);
+                console.log("minus", turn);
                 if (turn > 3 * Math.PI / 2 && turn < 2 * Math.PI)
                 {
                     return (CompareShapes(shapes, arrow, turn - 3 * Math.PI / 2));
@@ -77,17 +83,17 @@ goog.scope(function() {
             }
             else
             {
-                if (turn > 3 * Math.PI / 2 && turn < 2 * Math.PI)
+                if (turn > 3 * Math.PI / 2 && turn <= 2 * Math.PI)
                 {
                     return (CompareShapes(shapes, arrow, turn - Math.PI));
                 }
-                else if (turn > 0 && turn < Math.PI / 2)
+                else if (turn > 0 && turn <= Math.PI / 2)
                 {
                     return (CompareShapes(shapes, arrow, turn));
                 }
-                else if (turn > Math.PI && turn < 3 * Math.PI / 2)
+                else if (turn > Math.PI && turn <= 3 * Math.PI / 2)
                 {
-                    return (CompareShapes(shapes, arrow, turn));
+                    return (CompareShapes(shapes, arrow, turn - Math.PI / 2));
                 }
                 else
                 {
