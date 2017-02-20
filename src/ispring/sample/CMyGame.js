@@ -139,6 +139,7 @@ goog.scope(function()
         },
         RotateSystem: function()
         {
+        	console.log(this.m_rotation);
             if (this.m_twist)
             {
                 this.m_rotation += this.m_speed;

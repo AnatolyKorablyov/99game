@@ -59,11 +59,9 @@ goog.scope(function() {
             var turn = rotate / (config._TWO_HALVES * Math.PI);
             turn = turn % 1;
             turn = turn * 2 * Math.PI;
-            console.log(turn);
             if (turn < 0)
             {
                 turn = Math.abs(turn);
-                console.log("minus", turn);
                 if (turn > 3 * Math.PI / 2 && turn < 2 * Math.PI)
                 {
                     return (CompareShapes(shapes, arrow, turn - 3 * Math.PI / 2));
@@ -83,22 +81,55 @@ goog.scope(function() {
             }
             else
             {
-                if (turn > 3 * Math.PI / 2 && turn <= 2 * Math.PI)
+                if (shapes.length > 4)
                 {
-                    return (CompareShapes(shapes, arrow, turn - Math.PI));
-                }
-                else if (turn > 0 && turn <= Math.PI / 2)
-                {
-                    return (CompareShapes(shapes, arrow, turn));
-                }
-                else if (turn > Math.PI && turn <= 3 * Math.PI / 2)
-                {
-                    return (CompareShapes(shapes, arrow, turn - Math.PI / 2));
+                    if (turn > 0 && turn <= Math.PI / 2)
+                    {
+                        return (CompareShapes(shapes, arrow, turn));
+                    }
+                    else if (turn > Math.PI / 2 && turn <= Math.PI)
+                    {
+                        return (CompareShapes(shapes, arrow, turn + Math.PI));
+                    }
+                    else if (turn > Math.PI && turn <= 3 * Math.PI / 2)
+                    {
+                        return (CompareShapes(shapes, arrow, turn + Math.PI/2));
+                    }
+                    else if (turn > 3 * Math.PI / 2 && turn <= 2 * Math.PI)
+                    {
+                        return (CompareShapes(shapes, arrow, turn - Math.PI));
+                    }
+                    
+                    else
+                    {
+                        return (CompareShapes(shapes, arrow, turn + Math.PI));
+                    }
                 }
                 else
                 {
-                    return (CompareShapes(shapes, arrow, turn + Math.PI));
+                    if (turn > 0 && turn <= Math.PI / 2)
+                    {
+                        return (CompareShapes(shapes, arrow, turn));
+                    }
+                    else if (turn > Math.PI / 2 && turn <= Math.PI)
+                    {
+                        return (CompareShapes(shapes, arrow, turn + Math.PI));
+                    }
+                    else if (turn > Math.PI && turn <= 3 * Math.PI / 2)
+                    {
+                        return (CompareShapes(shapes, arrow, turn));
+                    }
+                    else if (turn > 3 * Math.PI / 2 && turn <= 2 * Math.PI)
+                    {
+                        return (CompareShapes(shapes, arrow, turn - Math.PI));
+                    }
+                    
+                    else
+                    {
+                        return (CompareShapes(shapes, arrow, turn + Math.PI));
+                    }
                 }
+                
             }
             return false;
         },

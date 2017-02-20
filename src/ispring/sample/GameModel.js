@@ -51,6 +51,8 @@ goog.scope(function() {
                 this._shapes[num - 1].SetColor(conf._COLORS[i]);
                 this._shapes[num - 1].SetPosition(conf._CENTER_X, conf._CENTER_Y);
                 this._shapes[num - 1].SetRotation(2 / conf._NUMBER_OF_COLORS * Math.PI * i);
+                console.log(i, conf._COLORS[i], 2 / conf._NUMBER_OF_COLORS * Math.PI * i)
+                
                 this._shapes[num - 1].SetStartRotation(2 / conf._NUMBER_OF_COLORS * Math.PI * i);
             }
         },
@@ -59,8 +61,12 @@ goog.scope(function() {
             this._top = window.localStorage.getItem(conf._TOP_RESULT);
             this._score = 0;
             this._speed = conf._SPEED;
+            /**
+             * @type {number}
+             * @private
+             */
             this._rotation = 0;
-            this._twist = false;
+            this._twist = true;
             this._numberOfColors = conf._NUMBER_OF_COLORS;
             this._shapes = [];
             var changeColor = this.GetRandomArbitary(0, conf._NUMBER_OF_COLORS - 1);
@@ -83,6 +89,10 @@ goog.scope(function() {
             {
                 this._rotation -= this._speed;
             }
+            if (this.GetRotate() > 0)
+            {
+                this._rotation -= 2*Math.PI;
+            }
             for (var i = 0; i < this._shapes.length; ++i)
             {
                 var startRotate = this._shapes[i].GetStartRotation();
@@ -95,7 +105,8 @@ goog.scope(function() {
         GetShapesWithArrow: function() {
             return [this._triangle].concat(this._shapes);
         },
-        GetRotate: function() {
+        GetRotate: function()
+        {
             return this._rotation;
         },
         GetTwist: function()
@@ -158,14 +169,12 @@ goog.scope(function() {
             var g = this.GetRandomArbitary(0, 256);
             var b = this.GetRandomArbitary(0, 256);
             var newRandomColor='#' + r.toString(16) + g.toString(16) + b.toString(16);
-            console.log(newRandomColor);
             while (this.CheckColors(newRandomColor))
             {
                 var r = this.GetRandomArbitary(0, 256);
                 var g = this.GetRandomArbitary(0, 256);
                 var b = this.GetRandomArbitary(0, 256);
                 newRandomColor='#' + r.toString(16) + g.toString(16) + b.toString(16);
-                console.log(newRandomColor);
             }
             this._colors.push(newRandomColor);
 
@@ -181,7 +190,6 @@ goog.scope(function() {
                 this._shapes[num - 1].SetColor(this._colors[i]);
                 this._shapes[num - 1].SetPosition(conf._CENTER_X, conf._CENTER_Y);
                 this._shapes[num - 1].SetRotation(conf._TWO_HALVES / this._numberOfColors * Math.PI * i);
-                console.log(i, this._colors[i], conf._TWO_HALVES / this._numberOfColors * Math.PI * i)
                 this._shapes[num - 1].SetStartRotation(conf._TWO_HALVES / this._numberOfColors * Math.PI * i);
             }
         },
