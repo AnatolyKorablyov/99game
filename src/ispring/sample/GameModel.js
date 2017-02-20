@@ -11,6 +11,7 @@ goog.scope(function() {
     const SHAPE = ispring.sample.CShape;
     const conf = new GAME_CONFIG();
 
+    const NEW_COLORS = ["#00FFFF", "#FF00FF", "#C0C0C0", "#808080", "#800000", "#808000", "#008000", "#800080", "#008080", "#000080", "#FF4500", "#B8860B", "#008000", "#00FFFF", "#FF1493", "#4B0082", "#E6E6FA", "#20B2AA", "#00FA9A", "#FFDEAD", "#DB7093", "#8B4513", "#F5F5F5", "#AFEEEE", "#FF00FF", "#00FA9A", "#FFF0F5", "#2F4F4F"];
     ispring.sample.GameModel = goog.defineClass(null, {
         constructor: function () {
             this._triangle = new SHAPE();
@@ -51,8 +52,7 @@ goog.scope(function() {
                 this._shapes[num - 1].SetColor(conf._COLORS[i]);
                 this._shapes[num - 1].SetPosition(conf._CENTER_X, conf._CENTER_Y);
                 this._shapes[num - 1].SetRotation(2 / conf._NUMBER_OF_COLORS * Math.PI * i);
-                console.log(i, conf._COLORS[i], 2 / conf._NUMBER_OF_COLORS * Math.PI * i)
-                
+               
                 this._shapes[num - 1].SetStartRotation(2 / conf._NUMBER_OF_COLORS * Math.PI * i);
             }
         },
@@ -163,18 +163,13 @@ goog.scope(function() {
         IncrementSectors: function()
         {
             ++this._numberOfColors;
-
-
-            var r = this.GetRandomArbitary(0, 256);
-            var g = this.GetRandomArbitary(0, 256);
-            var b = this.GetRandomArbitary(0, 256);
-            var newRandomColor='#' + r.toString(16) + g.toString(16) + b.toString(16);
+            
+            var newRandomColor = NEW_COLORS[this.GetRandomArbitary(0, NEW_COLORS.length - 1)];
+            console.log(newRandomColor);
             while (this.CheckColors(newRandomColor))
             {
-                var r = this.GetRandomArbitary(0, 256);
-                var g = this.GetRandomArbitary(0, 256);
-                var b = this.GetRandomArbitary(0, 256);
-                newRandomColor='#' + r.toString(16) + g.toString(16) + b.toString(16);
+                var newRandomColor = NEW_COLORS[this.GetRandomArbitary(0, NEW_COLORS.length - 1)];
+                console.log(newRandomColor);
             }
             this._colors.push(newRandomColor);
 
