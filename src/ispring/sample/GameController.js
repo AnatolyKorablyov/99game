@@ -135,6 +135,8 @@ goog.scope(function() {
         },
         OnMouseClick: function()
         {
+            this._view.DrawShapes(this._model.GetShapesWithArrow());
+
             if (!this.CheckColors())
             {
                 alert("FAILED!");
